@@ -2,76 +2,94 @@ package style;
 
 public class PokerHandImpl implements PokerHand {
 
-	private Card[] c;
+	private Card[] cards;
 
+	/*
+	Creates a poker hand that consists of 5 cards containing a hand value
+	and hand rank depending on the relationship between the rank and suits
+	of the cards.
+	 */
 	public PokerHandImpl(Card[] cards) {
 		if (cards == null) {
-			throw new RuntimeException("bad");
+			throw new RuntimeException("cards cannot be null");
 		}
 		if (cards.length != 5) {
-			throw new RuntimeException("bad");
+			throw new RuntimeException("cards length needs to be five");
 		}
 		for (int i=0; i<5; i++) {
 			if (cards[i] == null) {
-				throw new RuntimeException("bad");
+				throw new RuntimeException("card cannot be null");
 			}
 		}
 
-		c = cards.clone();
+		this.cards = cards.clone();
 		
 		for (int i=0; i<5; i++) {			
 			for (int j=i; j<5; j++) {
-				if (c[j].r() < c[i].r()) {
-					Card tmp = c[i];
-					c[i] = c[j];
-					c[j] = tmp;
+				if (this.cards[j].getRank() < this.cards[i].getRank()) {
+					Card tempCard = this.cards[i];
+					this.cards[i] = this.cards[j];
+					this.cards[j] = tempCard;
 				}
 			}
 		}
 	}
 
+	/*
+	Returns as an array the five cards in the hand.
+	 */
 	public Card[] getCards() {
-		return c.clone();
+		return cards.clone();
 	}
 
-	public boolean contains(Card c2) {
+	/*
+	Returns true if one of the cards in the hand matches in rank and
+	suit the card passed in as a parameter.
+	 */
+	public boolean contains(Card c) {
 		for (int i=0; i<5; i++) {
-			if (c[i].equals(c2)) {
+			if (cards[i].equals(c)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
+	/*
+	Indicates whether the hand is a flush.
+	Note, a hand that is a straight flush should return true for this method
+	 */
 	public boolean isFlush() {
 		for (int i=1; i<5; i++) {
-			if (c[i].s() != c[0].s()) {
+			if (cards[i].getSuit() != cards[0].getSuit()) {
 				return false;
 			}
 		}
 		return true;
 	}
 
+	/*
+	Indicates whether the hand is a straight.
+	Note, a hand that is a straight flush should return true for this
+	method.
+	 */
 	public boolean isStraight() {
-		
-
-		
-		boolean lmao_what = true;
+		boolean output = true;
 		for (int i=0; i<4; i++) {
-			if (c[i].r()+1 != c[i+1].r()) {
-				lmao_what = false;
+			if (cards[i].getRank()+1 != cards[i+1].getRank()) {
+				output = false;
 				break;
 			}
 		}
-		return lmao_what || isTheWheel();
+		return output || isTheWheel();
 	}
 
 	private boolean isTheWheel() {
-		if (c[0].r() == 2) {
-			if (c[1].r() == 3) {
-				if (c[2].r() == 4) {
-					if (c[3].r() == 5) {
-						if (c[4].r() == 14) {
+		if (cards[0].getRank() == 2) {
+			if (cards[1].getRank() == 3) {
+				if (cards[2].getRank() == 4) {
+					if (cards[3].getRank() == 5) {
+						if (cards[4].getRank() == 14) {
 							return true;
 						}
 					}
@@ -81,77 +99,100 @@ public class PokerHandImpl implements PokerHand {
 		return false;
 	}
 
+	/*
+	Indicates whether the hand is a one pair hand.
+	 */
 	public boolean isOnePair() {
-
-		int pair_idx = find_pair_starting_at(0);
-
-		boolean no_other_pairs = find_pair_starting_at(pair_idx+1) == -1;
-		
+		int pair_idx = findPairStartingAt(0);
+		boolean no_other_pairs = findPairStartingAt(pair_idx+1) == -1;
 		return ((pair_idx != -1) && no_other_pairs);
-		
 	}
 
+	/*
+	Indicates whether the hand is a two pair hand.
+	 */
 	public boolean isTwoPair() {
-		
-		int firstPairIdx = find_pair_starting_at(0);
-		int second_pairIdx = find_pair_starting_at(firstPairIdx+2);
-
-		return ((firstPairIdx != -1) && (second_pairIdx != -1) && !isFourOfAKind() && !isFullHouse());
+		int firstPairIdx = findPairStartingAt(0);
+		int second_pairIdx = findPairStartingAt(firstPairIdx+2);
+		return ((firstPairIdx != -1) &&
+				(second_pairIdx != -1) &&
+				!isFourOfAKind() &&
+				!isFullHouse());
 	}
 
+	/*
+	Indicates whether the hand is a three of a kind.
+	 */
 	public boolean isThreeOfAKind() {
-		int first_pair_idx = find_pair_starting_at(0);
-		
-		if ((first_pair_idx == -1) || (first_pair_idx == 3)) {
+		int firstPairIndex = findPairStartingAt(0);
+		if ((firstPairIndex == -1) || (firstPairIndex == 3)) {
 			return false;
 		}
-		
-		
-		return ((c[first_pair_idx].r() == c[first_pair_idx+2].r()) &&
-				!isFourOfAKind() && !isFullHouse());
+		return ((cards[firstPairIndex].getRank() == cards[firstPairIndex+2].getRank()) &&
+				!isFourOfAKind() &&
+				!isFullHouse());
 	}
 
+	/*
+	Indicates whether the hand is a full house.
+	 */
 	public boolean isFullHouse() {
-		return (((c[0].r() == c[1].r()) &&
-				 (c[2].r() == c[3].r()) &&
-				 (c[3].r() == c[4].r())) ||
-				((c[0].r() == c[1].r()) &&
-				 (c[1].r() == c[2].r()) &&
-				 (c[3].r() == c[4].r())));		
+		return (((cards[0].getRank() == cards[1].getRank()) &&
+				 (cards[2].getRank() == cards[3].getRank()) &&
+				 (cards[3].getRank() == cards[4].getRank())) ||
+				((cards[0].getRank() == cards[1].getRank()) &&
+				 (cards[1].getRank() == cards[2].getRank()) &&
+				 (cards[3].getRank() == cards[4].getRank())));
 	}
 
+	/*
+	Indicates whether the hand is a four of a kind.
+	 */
 	public boolean isFourOfAKind() {
-		return (((c[0].r() == c[1].r()) &&
-				 (c[1].r() == c[2].r()) &&
-				 (c[2].r() == c[3].r()))||
-				((c[1].r() == c[2].r()) &&
-				 (c[2].r() == c[3].r()) &&
-				 (c[3].r() == c[4].r())));		
+		return (((cards[0].getRank() == cards[1].getRank()) &&
+				 (cards[1].getRank() == cards[2].getRank()) &&
+				 (cards[2].getRank() == cards[3].getRank()))||
+				((cards[1].getRank() == cards[2].getRank()) &&
+				 (cards[2].getRank() == cards[3].getRank()) &&
+				 (cards[3].getRank() == cards[4].getRank())));
 	}	
-	
+
+	/*
+	Indicates whether the hand is a straight flush (i.e., both a straight
+	and a flush).
+	 */
 	public boolean isStraightFlush() {
-		if (isStraight() == true) {
-			if (isFlush() == true) {
-				return true;
-			}
+		if (isStraight() == true && isFlush() == true) {
+			return true;
 		}
 		return false;
 	}
 
+	/*
+	Returns the hand rank of the hand as described above.
+	 */
 	public int getHandRank() {
 		if (isOnePair() == true) {
-			return c[find_pair_starting_at(0)].r();
+			return cards[findPairStartingAt(0)].getRank();
 		} else if (isTwoPair() == true) {
-			return c[3].r();
+			return cards[3].getRank();
 		} else if (isThreeOfAKind() == true || isFourOfAKind() == true || isFullHouse() == true) {
-			return c[2].r();
+			return cards[2].getRank();
 		} else if (isTheWheel() == true) {
 			return 5;
 		} else {
-			return c[4].r();
+			return cards[4].getRank();
 		}
 	}
 
+	/*
+	Compares a hand with the hand passed in as other.
+	Returns -1 if the hand value is smaller and 1 if the hand value is
+	larger than the hand passed in as other.
+	If the hand values are equal, then returns -1 if the hand rank is
+	smaller or 1 if the hand rank is larger.
+	If both hand value and hand rank are the same, returns 0.
+	 */
 	public int compareTo(PokerHand other) {
 		if (getHandTypeValue() < other.getHandTypeValue()) {
 			return -1;
@@ -167,38 +208,51 @@ public class PokerHandImpl implements PokerHand {
 			}
 		}
 	}
-	
+
+	/*
+	Returns the hand value of the hand as described above.
+	 */
 	public int getHandTypeValue() {
-		
-		if (isStraightFlush()) return 9;
-		
-		
-		if (isOnePair()) return 2;
-		
-		
-		if (isTwoPair()) return 3;
-		
-		
-	if (isThreeOfAKind()) return 4;
-		
-		
-		if (isStraight()) return 5;
-		if (isFlush()) return 6;
-		if (isFullHouse()) return 7;
-		if (isFourOfAKind()) return 8;
-	return 1;
+		if (isStraightFlush()){
+			return 9;
+		}
+		if (isOnePair()){
+			return 2;
+		}
+		if (isTwoPair()){
+			return 3;
+		}
+		if (isThreeOfAKind()) {
+			return 4;
+		}
+		if (isStraight()){
+			return 5;
+		}
+		if (isFlush()){
+			return 6;
+		}
+		if (isFullHouse()){
+			return 7;
+		}
+		if (isFourOfAKind()){
+			return 8;
+		}
+		return 1;
 	}
 	
-	private int find_pair_starting_at(int num) {		
-		if (num < 0) num = 0;
-		if (num >= 4) return -1;
-		
-		for (int i=num; i<4; i++) 
-	if (c[i].r() == c[i+1].r()) 
-		return i;
-			
-		
-	return -1;
+	private int findPairStartingAt(int num) {
+		if (num < 0) {
+			num = 0;
+		}
+		if (num >= 4){
+			return -1;
+		}
+		for (int i=num; i<4; i++) {
+			if (cards[i].getRank() == cards[i+1].getRank()) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 }

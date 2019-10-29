@@ -2,8 +2,8 @@ package style;
 
 public interface Card {
     public enum Suit {SPADES, HEARTS, DIAMONDS, CLUBS};
-    int r();
-    Card.Suit s();
+    int getRank();
+    Card.Suit getSuit();
     String toString();
     boolean equals(Card other);
     public static String suitToString(Card.Suit s) {

@@ -18,5 +18,4 @@ public interface PokerHand {
 	int getHandRank();
 	
 	int compareTo(PokerHand other);
-	
 }
