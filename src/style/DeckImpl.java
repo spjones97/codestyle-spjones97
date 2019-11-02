@@ -63,12 +63,12 @@ public class DeckImpl implements Deck {
 	}	
 
 	// Finds and removes card from the deck of cards
-	public void findAndRemove(Card c) {
+	public void findAndRemove(Card card) {
 		if (numberLeftToDeal == 0) {
 			return;
 		}
 		for (int i = nextDealtIndex(); i<52; i++) {
-			if (cards[i].equals(c)) {
+			if (cards[i].equals(card)) {
 				Card tempCard = cards[i];
 				cards[i] = cards[nextDealtIndex()];
 				cards[nextDealtIndex()] = tempCard;
@@ -80,7 +80,7 @@ public class DeckImpl implements Deck {
 	}
 
 	private int nextDealtIndex() {
-		int x = 52- numberLeftToDeal;
-		return x;
+		int index = 52- numberLeftToDeal;
+		return index;
 	}
 }

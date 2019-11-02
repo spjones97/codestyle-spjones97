@@ -193,15 +193,15 @@ public class PokerHandImpl implements PokerHand {
 	smaller or 1 if the hand rank is larger.
 	If both hand value and hand rank are the same, returns 0.
 	 */
-	public int compareTo(PokerHand other) {
-		if (getHandTypeValue() < other.getHandTypeValue()) {
+	public int compareTo(PokerHand otherHand) {
+		if (getHandTypeValue() < otherHand.getHandTypeValue()) {
 			return -1;
-		} else if (getHandTypeValue() > other.getHandTypeValue()) {
+		} else if (getHandTypeValue() > otherHand.getHandTypeValue()) {
 			return 1;
 		} else {
-			if (getHandRank() < other.getHandRank()) {
+			if (getHandRank() < otherHand.getHandRank()) {
 				return -1;
-			} else if (getHandRank() > other.getHandRank()) {
+			} else if (getHandRank() > otherHand.getHandRank()) {
 				return 1;
 			} else {
 				return 0;

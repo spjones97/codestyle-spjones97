@@ -6,8 +6,8 @@ public interface Card {
     Card.Suit getSuit();
     String toString();
     boolean equals(Card other);
-    public static String suitToString(Card.Suit s) {
-        switch (s) {
+    public static String suitToString(Card.Suit suit) {
+        switch (suit) {
             case SPADES:return "Spades";
             case HEARTS:return "Hearts";
             case DIAMONDS:return "Diamonds";

@@ -17,5 +17,5 @@ public interface PokerHand {
 	int getHandTypeValue();
 	int getHandRank();
 	
-	int compareTo(PokerHand other);
+	int compareTo(PokerHand otherHand);
 }
