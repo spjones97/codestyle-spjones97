@@ -1,8 +1,8 @@
 package style;
 
 public class CardImpl implements Card {
-	private static String[] strings = {null, null, "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace"};
-	
+	private static String[] strings = {"Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+										"Ten", "Jack", "Queen", "King", "Ace"};
 	public static final int JACK = 11;
 	public static final int QUEEN = 12;
 	public static final int KING = 13;
@@ -37,8 +37,8 @@ public class CardImpl implements Card {
 	Returns true if the card passed in as other has the same rank and
 	suit values.
 	 */
-	public boolean equals(Card other) {
-		return (rank == other.getRank()) && (suit == other.getSuit());
+	public boolean equals(Card otherCard) {
+		return (rank == otherCard.getRank()) && (suit == otherCard.getSuit());
 	}
 
 	/*

@@ -5,7 +5,7 @@ public interface Card {
     int getRank();
     Card.Suit getSuit();
     String toString();
-    boolean equals(Card other);
+    boolean equals(Card otherCard);
     public static String suitToString(Card.Suit suit) {
         switch (suit) {
             case SPADES:return "Spades";

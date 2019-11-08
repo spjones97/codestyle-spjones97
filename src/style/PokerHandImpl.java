@@ -1,7 +1,6 @@
 package style;
 
 public class PokerHandImpl implements PokerHand {
-
 	private Card[] cards;
 
 	/*
