@@ -1,6 +1,7 @@
 package style;
 
 public class PokerHandImpl implements PokerHand {
+
 	private Card[] cards;
 
 	/*
@@ -45,9 +46,9 @@ public class PokerHandImpl implements PokerHand {
 	Returns true if one of the cards in the hand matches in rank and
 	suit the card passed in as a parameter.
 	 */
-	public boolean contains(Card c) {
+	public boolean contains(Card card) {
 		for (int i=0; i<5; i++) {
-			if (cards[i].equals(c)) {
+			if (cards[i].equals(card)) {
 				return true;
 			}
 		}
@@ -161,7 +162,7 @@ public class PokerHandImpl implements PokerHand {
 	and a flush).
 	 */
 	public boolean isStraightFlush() {
-		if (isStraight() == true && isFlush() == true) {
+		if (isStraight() && isFlush()) {
 			return true;
 		}
 		return false;
@@ -171,13 +172,13 @@ public class PokerHandImpl implements PokerHand {
 	Returns the hand rank of the hand as described above.
 	 */
 	public int getHandRank() {
-		if (isOnePair() == true) {
+		if (isOnePair()) {
 			return cards[findPairStartingAt(0)].getRank();
-		} else if (isTwoPair() == true) {
+		} else if (isTwoPair()) {
 			return cards[3].getRank();
-		} else if (isThreeOfAKind() == true || isFourOfAKind() == true || isFullHouse() == true) {
+		} else if (isThreeOfAKind() || isFourOfAKind() || isFullHouse()) {
 			return cards[2].getRank();
-		} else if (isTheWheel() == true) {
+		} else if (isTheWheel()) {
 			return 5;
 		} else {
 			return cards[4].getRank();

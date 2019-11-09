@@ -1,7 +1,8 @@
 package style;
 
 public class CardImpl implements Card {
-	private static String[] strings = {"Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+
+	private static String[] ranks = {"Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
 										"Ten", "Jack", "Queen", "King", "Ace"};
 	public static final int JACK = 11;
 	public static final int QUEEN = 12;
@@ -47,7 +48,7 @@ public class CardImpl implements Card {
 	rank.
 	 */
 	public String toString() {
-		return strings[getRank()] + " of " + Card.suitToString(getSuit());
+		return ranks[getRank()] + " of " + Card.suitToString(getSuit());
 	}
 
 }

@@ -1,11 +1,9 @@
 package tests;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import style.Card;
-
 import style.CardImpl;
 
 public class A2NoviceTests {

@@ -1,11 +1,9 @@
 package style;
 
 public class DeckImpl implements Deck {
-	// Instance fields
+
 	private Card[] cards;
 	private int numberLeftToDeal;
-	
-	
 	
 	// Creates a deck of cards
 	public DeckImpl() {
@@ -15,7 +13,6 @@ public class DeckImpl implements Deck {
 		int cardsIndex = 0;
 		for (Card.Suit suit : Card.Suit.values()) {
 			for (int rank = 2; rank <= CardImpl.ACE; rank++) {
-				//System.out.println(rank);
 				cards[cardsIndex] = new CardImpl(rank, suit);
 				cardsIndex += 1;
 			}
@@ -80,7 +77,6 @@ public class DeckImpl implements Deck {
 	}
 
 	private int nextDealtIndex() {
-		int index = 52- numberLeftToDeal;
-		return index;
+		return (52 - numberLeftToDeal);
 	}
 }
