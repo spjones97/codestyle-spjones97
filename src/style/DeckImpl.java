@@ -38,7 +38,7 @@ public class DeckImpl implements Deck {
 	// Returns the next card in the deck
 	public Card dealNextCard() {
 		if (numberLeftToDeal == 0) {
-			throw new RuntimeException();
+			throw new RuntimeException("No cards left");
 		}
 		Card dealtCard = cards[nextDealtIndex()];
 		numberLeftToDeal -= 1;
