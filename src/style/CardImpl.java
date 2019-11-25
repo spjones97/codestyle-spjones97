@@ -9,8 +9,8 @@ public class CardImpl implements Card {
 	public static final int KING = 13;
 	public static final int ACE = 14;
 
-	public int rank;
-	public Card.Suit suit;
+	private int rank;
+	private Card.Suit suit;
 
 	public CardImpl(int rank, Card.Suit suit) {
 		this.rank = rank;

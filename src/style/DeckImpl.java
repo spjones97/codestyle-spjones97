@@ -28,11 +28,10 @@ public class DeckImpl implements Deck {
 
 	// Returns whether of not someone has a hand of cards
 	public boolean hasHand() {
-		boolean hasHand = false;
 		if (numberLeftToDeal >= 5) {
-			hasHand = true;
+			return true;
 		}
-		return hasHand;
+		return false;
 	}
 
 	// Returns the next card in the deck
@@ -47,7 +46,7 @@ public class DeckImpl implements Deck {
 
 	// Returns a poker hand
 	public PokerHand dealHand() {
-		if (hasHand() == false) {
+		if (!hasHand()) {
 			throw new RuntimeException("Person does not have a hand of cards");
 		}
 		
@@ -55,8 +54,7 @@ public class DeckImpl implements Deck {
 		for (int i=0; i<handOfCards.length; i++) {
 			handOfCards[i] = dealNextCard();
 		}
-		PokerHand hand = new PokerHandImpl(handOfCards);
-		return hand;
+		return new PokerHandImpl(handOfCards);
 	}	
 
 	// Finds and removes card from the deck of cards
